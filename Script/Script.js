@@ -13,25 +13,10 @@ const Pokedex = document.querySelector(".Pokedex");
 const gridPokemon = document.getElementById("gridPokemon");
 
 
-pokemon.addEventListener("blur", async () => {
-   
-        const poke = await AllPokemon.json();
-        Imagem.src = poke.sprites.front_default;
-        Nome.value = poke.name;
-        Altura.value = poke.height;
-        Peso.value = poke.weight;
-        Tipo.value = poke.types[0].type.name;
-        Ataque.value = poke.stats[1].base_stat;
-        Defesa.value = poke.stats[2].base_stat;
-        HP.value = poke.stats[0].base_stat;
-        Velocidade.value = poke.stats[5].base_stat; 
-});
-
 async function PegarPokemon() {
     try {
         const response = await fetch("https://pokeapi.co/api/v2/pokemon?limit=20");
         const data = await response.json();
-
         TodosPokemons = await Promise.all(
             data.results.map(async (pokemon) => {
                 const response = await fetch(pokemon.url);
@@ -62,5 +47,22 @@ function renderizarPokemons() {
     });
 }
 PegarPokemon();
+
+
+pokemon.addEventListener("blur", async () => {
+   
+        const poke = await AllPokemon.json();
+        Imagem.src = poke.sprites.front_default;
+        Nome.value = poke.name;
+        Altura.value = poke.height;
+        Peso.value = poke.weight;
+        Tipo.value = poke.types[0].type.name;
+        Ataque.value = poke.stats[1].base_stat;
+        Defesa.value = poke.stats[2].base_stat;
+        HP.value = poke.stats[0].base_stat;
+        Velocidade.value = poke.stats[5].base_stat; 
+});
+
+
 
 
