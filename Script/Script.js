@@ -1,5 +1,5 @@
 
-const pokemon = document.getElementById("Pokemon")
+const pokemon = document.getElementById("Pokemon");
 const Imagem = document.getElementById("Imagem");
 const Nome = document.getElementById("Nome");
 const Altura = document.getElementById("Altura");
@@ -12,6 +12,7 @@ const Velocidade = document.getElementById("Velocidade");
 const Pokedex = document.querySelector(".Pokedex");
 const gridPokemon = document.getElementById("gridPokemon");
 
+Pokedex.style.display = "none";
 
 async function PegarPokemon() {
     try {
@@ -22,15 +23,15 @@ async function PegarPokemon() {
                 const response = await fetch(pokemon.url);
                 return await response.json();
             })
-        )
+        );
         renderizarPokemons();
     } catch (error) {
         console.log(error);
-    };
-};
+    }
+}
 
 function renderizarPokemons() {
-    console.log( "todosPokemons:\N",TodosPokemons );
+    console.log("todosPokemons:", TodosPokemons);
     TodosPokemons.forEach(pokemon => {
         gridPokemon.innerHTML += `
             <div class="card col-3" style="width: 18rem;">
@@ -45,13 +46,35 @@ function renderizarPokemons() {
             </div>
         `;
     });
+    const cards = document.querySelectorAll(".card");
+    cards.forEach((card, indice) => {
+        card.addEventListener("click", () => {
+            const poke = TodosPokemons[indice];
+            Pokedex.style.display = "block";
+            Imagem.src = poke.sprites.front_default;
+            Nome.value = poke.name;
+            Altura.value = poke.height;
+            Peso.value = poke.weight;
+            Tipo.value = poke.types[0].type.name;
+            Ataque.value = poke.stats[1].base_stat;
+            Defesa.value = poke.stats[2].base_stat;
+            HP.value = poke.stats[0].base_stat;
+            Velocidade.value = poke.stats[5].base_stat;
+            Pokedex.scrollIntoView({
+                behavior: "smooth"
+            });
+        });
+    });
 }
 PegarPokemon();
 
-
 pokemon.addEventListener("blur", async () => {
-   
-        const poke = await AllPokemon.json();
+    try {
+        const response = await fetch(
+            `https://pokeapi.co/api/v2/pokemon/${pokemon.value}`
+        );
+        const poke = await response.json();
+        Pokedex.style.display = "block";
         Imagem.src = poke.sprites.front_default;
         Nome.value = poke.name;
         Altura.value = poke.height;
@@ -60,9 +83,8 @@ pokemon.addEventListener("blur", async () => {
         Ataque.value = poke.stats[1].base_stat;
         Defesa.value = poke.stats[2].base_stat;
         HP.value = poke.stats[0].base_stat;
-        Velocidade.value = poke.stats[5].base_stat; 
+        Velocidade.value = poke.stats[5].base_stat;
+    } catch (error) {
+        console.log("Pokémon não encontrado");
+    }
 });
-
-
-
-
