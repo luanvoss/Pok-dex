@@ -35,3 +35,9 @@ main {
 .Pokedex {
     order: 2;
 }
+
+.Pokedex {
+    display: none;
+}
+
+ 
