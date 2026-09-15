@@ -13,7 +13,6 @@ async function PegarPokemon() {
     try {
         const response = await fetch("https://pokeapi.co/api/v2/pokemon?limit=20");
         const data = await response.json();
-
         todosPokemons = await Promise.all(
             data.results.map(async (pokemon) => {
                 const response = await fetch(pokemon.url);
