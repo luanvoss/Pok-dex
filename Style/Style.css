@@ -52,7 +52,7 @@ header img {
     text-align: center;
 }
 body {
-    background: linear-gradient(180deg, rgb(255, 255, 255), rgb(60, 194, 235));
+    background: linear-gradient(180deg,  rgb(255, 255, 255), rgb(60, 194, 235));
     min-height: 100vh;
 }
 header{
